@@ -2,6 +2,7 @@ import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateToken } from "../lib/utils.js";
+import cloudinary from "../lib/cloudinary.js";
 
 
 export const signup = async (req, res) => {
@@ -109,6 +110,11 @@ export const signup = async (req, res) => {
       }
   }
 
-  export const checkAuth= async(req,res)=>{
-    
-  }
+  export const checkAuth = (req, res) => {
+    try {
+      res.status(200).json(req.user);
+    } catch (error) {
+      console.log("Error in checkAuth controller", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  };
